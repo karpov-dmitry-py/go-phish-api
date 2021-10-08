@@ -1,0 +1,10 @@
+version: "3"
+services:
+  phish-api:
+    image: phish-api
+    container_name: phish-api-container
+    restart: always
+    ports:
+      - "8000"
+    network_mode: host
+      

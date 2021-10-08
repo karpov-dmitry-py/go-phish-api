@@ -1,0 +1,46 @@
+http:
+  listen: 8000
+  auth_tokens:
+    parser: d0a3f4d2-96f8-488d-9d60-c54978a00b84
+
+rabbit:
+  dst:
+      dsn: amqp://admin:G5aX1bL2OJi6@127.0.0.1:5672/vhost_2
+      exchange: dst
+      exchanges:
+          src_1: dst_2
+          src_2: dst_2
+          src_3: dst_2
+          test: dst_2
+
+validation:
+  url_blacklist_regexps:
+    - (?i)payment\.xyz
+  
+  local_ip_nets:
+    - 10.0.0.0/8
+    - 127.0.0.0/8     # IPv4 loopback
+    - 172.16.0.0/12   # RFC1918
+    - 192.168.0.0/16  # RFC1918
+    - 169.254.0.0/16  # RFC3927 link-local
+    - ::1/128         # IPv6 loopback
+    - fe80::/10       # IPv6 link-local
+    - fc00::/7        # IPv6 unique local addr
+
+  whitelister_api:
+    check_ip_api_url: http://someapi.com/check?ip=%v
+    check_domain_api_url: http://someapi.com/check?domain=%v
+    max_tries: 5
+    sleep_time: 5s
+
+
+elastic:
+  index: phish-api-logs
+  hosts:
+    - http://127.0.0.1:9200
+  username:
+  password: 
+  max_retries: 10
+  sleep_time: 1s
+  flush_interval: 1s
+  who: phish-api-v1
